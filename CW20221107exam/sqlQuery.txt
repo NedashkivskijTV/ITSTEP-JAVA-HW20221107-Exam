@@ -1,0 +1,82 @@
+CREATE DATABASE my_db_carservice;
+USE my_db_carservice;
+
+CREATE TABLE countries(
+	id int primary key not null auto_increment,
+    name varchar(25)
+);
+
+CREATE TABLE brends(
+    id int primary key not null auto_increment,
+    country_id int,
+    name text,
+	foreign key(country_id) references countries(id)
+);
+
+CREATE TABLE cars(
+	id int primary key not null auto_increment,
+    brend_id int,
+    model text,
+    vin text,
+    license_number text,
+	foreign key(brend_id) references brends(id)
+);
+
+CREATE TABLE services(
+	id int primary key not null auto_increment,
+    service_name text,
+    price int
+);
+
+CREATE TABLE clients(
+	id int primary key not null auto_increment,
+    first_name varchar(50),
+    last_name varchar(50),
+    phone varchar(25),
+    is_vip boolean
+);
+
+CREATE TABLE managers(
+	id int primary key not null auto_increment,
+    first_name varchar(50),
+    last_name varchar(50),
+    phone varchar(25)
+);
+
+CREATE TABLE orders(
+	id int primary key not null auto_increment,
+    car_id int,
+    service_id int,
+    client_id int,
+    manager_id int,
+    date_in datetime,
+    date_out datetime,
+	foreign key(car_id) references cars(id),
+	foreign key(service_id) references services(id),
+	foreign key(client_id) references clients(id),
+	foreign key(manager_id) references managers(id)
+);
+
+insert into countries(name) values ('Great Britain');
+insert into countries(name) values ('USA');
+insert into countries(name) values ('Italy');
+
+insert into brends(country_id, name) values ('1', 'Rolls-Royce');
+insert into brends(country_id, name) values ('1', 'Aston Martin');
+insert into brends(country_id, name) values ('1', 'Bentley');
+insert into brends(country_id, name) values ('2', 'Cadillac');
+insert into brends(country_id, name) values ('2', 'Chevrolet');
+insert into brends(country_id, name) values ('2', 'Lincoln');
+insert into brends(country_id, name) values ('3', 'Ferrari');
+insert into brends(country_id, name) values ('3', 'Fiat');
+insert into brends(country_id, name) values ('3', 'Maserati');
+
+insert into cars(brend_id, model, vin, license_number) values ('1', 'Phantom', 'XTA210990Y2766389', '1122334455');
+
+select * from countries;
+select * from brends;
+select * from cars;
+select * from services;
+select * from clients;
+select * from managers;
+select * from orders;
